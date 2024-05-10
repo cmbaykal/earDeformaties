@@ -10,7 +10,7 @@ activityCompose = "1.9.0"
 composeBom = "2024.05.00"
 dagger = "2.51.1"
 kspVersion = "1.9.23-1.0.20"
-dataframeVersion = "0.13.1"
+onnxVersion = "1.17.3"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -29,7 +29,7 @@ androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 hilt = { group = "com.google.dagger", name = "hilt-android", version.ref = "dagger" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "dagger" }
-dataframe = { group = "org.jetbrains.kotlinx", name="dataframe", version.ref = "dataframeVersion"}
+onnx = { group = "com.microsoft.onnxruntime", name= "onnxruntime-android", version.ref = "onnxVersion"}
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

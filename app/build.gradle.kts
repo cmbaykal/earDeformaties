@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId = "com.mrbaikal.eardeformaties"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -42,9 +42,23 @@ android {
         kotlinCompilerExtensionVersion = "1.5.13"
     }
     packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
+            resources {
+                pickFirsts += listOf(
+                    "META-INF/AL2.0",
+                    "META-INF/LGPL2.1",
+                    "META-INF/ASL-2.0.txt",
+                    "META-INF/LICENSE.md",
+                    "META-INF/NOTICE.md",
+                    "META-INF/LGPL-3.0.txt",
+                    "META-INF/LICENSE-EDL-1.0.txt",
+                )
+                excludes += listOf(
+                    "META-INF/kotlin-jupyter-libraries/libraries.json",
+                    "META-INF/{INDEX.LIST,DEPENDENCIES}",
+                    "{draftv3,draftv4}/schema",
+                    "arrow-git.properties"
+                )
+            }
     }
 }
 
@@ -63,8 +77,9 @@ dependencies {
     implementation(libs.hilt)
     ksp(libs.hilt.compiler)
 
-    // DataFrame
-    implementation(libs.dataframe)
+    // ONNX
+    implementation(libs.onnx)
+
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

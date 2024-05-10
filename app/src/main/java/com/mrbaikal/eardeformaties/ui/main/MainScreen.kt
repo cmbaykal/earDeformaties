@@ -38,9 +38,9 @@ fun MainScreen(
 ) {
     val context = LocalContext.current
 
-    var ageState by remember { mutableStateOf("") }
-    var workState by remember { mutableStateOf("") }
-    var cigarState by remember { mutableStateOf("") }
+    var ageState by remember { mutableStateOf("30") }
+    var workState by remember { mutableStateOf("10") }
+    var cigarState by remember { mutableStateOf("10") }
 
     var hProtectorExpanded by remember { mutableStateOf(false) }
     val hProtectorOptions = listOf("Hayır", "Evet")
