@@ -6,12 +6,17 @@ import ai.onnxruntime.OrtSession
 import androidx.lifecycle.ViewModel
 import com.mrbaikal.eardeformaties.data.CalculationModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import java.io.File
 import java.nio.FloatBuffer
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor() : ViewModel() {
+
+    private val _result = MutableStateFlow<Long?>(null)
+    val result = _result.asStateFlow()
 
     fun calculateResult(model: CalculationModel, ortSession: OrtSession, ortEnvironment: OrtEnvironment) {
         // Get the name of the input node
@@ -32,6 +37,7 @@ class MainViewModel @Inject constructor() : ViewModel() {
         val results = ortSession.run(mapOf(inputName to inputTensor))
         // Fetch and return the results
         val output = results[0].value as LongArray
-        println("Test output : ${output[0]}")
+
+        _result.value = output[0]
     }
 }
