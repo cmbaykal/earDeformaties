@@ -1,3 +1,26 @@
 <resources>
     <string name="app_name">earDeformaties</string>
+    <string name="age_hint">Age (Years)</string>
+    <string name="work_hint">Working Time (Years)</string>
+    <string name="hearing_hint">Hearing Protection Apparatus</string>
+    <string name="smoking_hint">Smoking (Years)</string>
+    <string name="tinnitus_hint">Tinnitus</string>
+    <string name="calculate_text">Calculate</string>
+    <string name="input_error_text">Please fill the provided information fields!</string>
+
+    <string-array name="hearing_options">
+        <item>Always</item>
+        <item>Sometimes</item>
+        <item>Never</item>
+    </string-array>
+
+    <string-array name="tinnitus_options">
+        <item>Yes</item>
+        <item>No</item>
+    </string-array>
+
+    <string-array name="result_options">
+        <item>There is no risk of hearing loss.</item>
+        <item>There is a risk of hearing loss.</item>
+    </string-array>
 </resources>

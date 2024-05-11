@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -24,6 +25,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringArrayResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -31,27 +34,32 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.mrbaikal.eardeformaties.R
 import com.mrbaikal.eardeformaties.data.CalculationModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(
-    riskState: Long? = null,
+    riskState: Int? = null,
     onCalculate: (CalculationModel) -> Unit = {}
 ) {
     val context = LocalContext.current
 
-    var ageState by remember { mutableStateOf("30") }
-    var workState by remember { mutableStateOf("10") }
-    var cigarState by remember { mutableStateOf("10") }
+
+    var ageState by remember { mutableStateOf("") }
+    var workState by remember { mutableStateOf("") }
+    var cigarState by remember { mutableStateOf("") }
 
     var hProtectorExpanded by remember { mutableStateOf(false) }
-    val hProtectorOptions = listOf("Hayır", "Evet")
+    val hProtectorOptions = stringArrayResource(id = R.array.hearing_options)
     val (hProtectorSelected, onHProtectorSelected) = remember { mutableStateOf(hProtectorOptions[0]) }
 
     var tinnitusExpanded by remember { mutableStateOf(false) }
-    val tinnitusOptions = listOf("Yok", "Tek kulakta var", "İki kulakta var")
+    val tinnitusOptions = stringArrayResource(id = R.array.hearing_options)
     val (tinnitusSelected, ontinnitusSelected) = remember { mutableStateOf(tinnitusOptions[0]) }
+
+    val errorText = stringResource(id = R.string.input_error_text)
+    val resultOptions = stringArrayResource(id = R.array.result_options)
 
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -68,10 +76,8 @@ fun MainScreen(
                 singleLine = true,
                 value = ageState,
                 onValueChange = { ageState = it },
-                placeholder = {
-                    Text(
-                        "Yaşınız"
-                    )
+                label = {
+                    Text(stringResource(id = R.string.age_hint))
                 },
                 keyboardActions = KeyboardActions.Default
             )
@@ -84,8 +90,8 @@ fun MainScreen(
                 singleLine = true,
                 value = workState,
                 onValueChange = { workState = it },
-                placeholder = {
-                    Text("Çalışma Yılınız")
+                label = {
+                    Text(stringResource(id = R.string.work_hint))
                 }
             )
 
@@ -103,7 +109,7 @@ fun MainScreen(
                     readOnly = true,
                     value = hProtectorSelected,
                     onValueChange = { },
-                    label = { Text("İşitme Koruyucu Durumu") },
+                    label = { Text(stringResource(id = R.string.hearing_hint)) },
                     trailingIcon = {
                         ExposedDropdownMenuDefaults.TrailingIcon(
                             expanded = hProtectorExpanded
@@ -135,12 +141,12 @@ fun MainScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 16.dp),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number, imeAction = ImeAction.Next),
                 singleLine = true,
                 value = cigarState,
                 onValueChange = { cigarState = it },
-                placeholder = {
-                    Text("Sigara İçme Süresi (Yıl)")
+                label = {
+                    Text(stringResource(id = R.string.smoking_hint))
                 }
             )
 
@@ -159,7 +165,7 @@ fun MainScreen(
                     readOnly = true,
                     value = tinnitusSelected,
                     onValueChange = { },
-                    label = { Text("Kulak Çınlaması Durumu") },
+                    label = { Text(stringResource(id = R.string.tinnitus_hint)) },
                     trailingIcon = {
                         ExposedDropdownMenuDefaults.TrailingIcon(
                             expanded = tinnitusExpanded
@@ -190,6 +196,7 @@ fun MainScreen(
             Button(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .height(60.dp)
                     .padding(top = 16.dp),
                 onClick = {
                     if (ageState.isNotEmpty() && workState.isNotEmpty() && cigarState.isNotEmpty()) {
@@ -202,27 +209,23 @@ fun MainScreen(
                         )
                         onCalculate.invoke(model)
                     } else {
-                        Toast.makeText(context, "Lütfen gerekli alanları doldurunuz!", Toast.LENGTH_LONG).show()
+                        Toast.makeText(context, errorText, Toast.LENGTH_LONG).show()
                     }
                 }
             ) {
                 Text(
                     fontSize = 16.sp,
-                    text = "Hesapla"
+                    text = stringResource(id = R.string.calculate_text)
                 )
             }
 
             if (riskState != null) {
                 Text(
-                    modifier = Modifier.padding(top = 16.dp),
+                    modifier = Modifier.padding(top = 48.dp),
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center,
-                    text = if (riskState == 0L) {
-                        "Sonuç\nİşitme Kaybı Riski Düşük"
-                    } else {
-                        "Sonuç\nİşitme Kaybı Riski Yüksek"
-                    }
+                    text = resultOptions[riskState]
                 )
             }
         }
