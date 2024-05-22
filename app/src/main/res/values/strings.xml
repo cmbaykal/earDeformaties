@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">earDeformaties</string>
+    <string name="app_name">NIHL</string>
     <string name="age_hint">Age (Years)</string>
     <string name="work_hint">Working Time (Years)</string>
     <string name="hearing_hint">Hearing Protection Apparatus</string>
@@ -9,14 +9,14 @@
     <string name="input_error_text">Please fill the provided information fields!</string>
 
     <string-array name="hearing_options">
-        <item>Always</item>
-        <item>Sometimes</item>
         <item>Never</item>
+        <item>Sometimes</item>
+        <item>Always</item>
     </string-array>
 
     <string-array name="tinnitus_options">
-        <item>Yes</item>
         <item>No</item>
+        <item>Yes</item>
     </string-array>
 
     <string-array name="result_options">

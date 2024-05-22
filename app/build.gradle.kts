@@ -75,6 +75,9 @@ dependencies {
 
     // DI
     implementation(libs.hilt)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.material)
+    implementation(libs.androidx.activity)
     ksp(libs.hilt.compiler)
 
     // ONNX
